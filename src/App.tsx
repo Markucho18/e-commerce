@@ -1,10 +1,10 @@
-import './App.css'
+import { products } from './mocks/products.json'
+import Products from "./components/Products"
 
 function App(): JSX.Element {
-
   return (
-    <div className="App">
-      <span className=''></span>
+    <div className="bg-black min-h-screen min-w-screen">
+      <Products products={products}/>
     </div>
   )
 }
