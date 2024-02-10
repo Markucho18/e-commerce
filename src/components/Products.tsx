@@ -8,11 +8,8 @@ interface ProductsProps {
 const Products: React.FC<ProductsProps> = ({ products }) => {
   return (
     <main className="flex justify-center items-center w-full ">
-      <ul
-        className="grid gap-4"
-        style={{gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))'}}
-      >
-        {products.map(product => (
+      <ul className="grid gap-4 grid-cols-auto-fit" >
+        {products.slice(0, 8).map(product => (
           <Product productData={product}/>
         ))}
       </ul>

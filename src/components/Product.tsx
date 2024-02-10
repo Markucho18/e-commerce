@@ -25,9 +25,9 @@ const Product: React.FC<Props> = ({ productData }) => {
   return (
     <li className="flex flex-col items-center text-white border-2 border-white p-4 gap-2">
       <img src={thumbnail} alt="thumbnail" className="h-1/3 object-cover object-center rounded aspect-video"/>
-      <span className="text-2xl">{title}</span>
-      <span className="text-lg">${price}</span>
-      <span className="text-lg font-thin">{description}</span>
+      <p className="text-2xl w-full truncate text-center">{title}</p>
+      <p className="text-lg">${price}</p>
+     { <p className="text-lg font-thin">{description}</p>}
       <button>
         <AddToCartIcon />
       </button>

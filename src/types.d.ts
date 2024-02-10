@@ -11,3 +11,8 @@ export interface ProductProps {
   thumbnail: string
   images: string[]
 }
+
+export interface Filters {
+  category: string
+  minPrice: number
+}
