@@ -1,34 +1,24 @@
+import { useState } from 'react'
 import { products as initialProducts } from './mocks/products.json'
 import Products from "./components/Products"
 import Header from './components/Header'
-import { useState } from 'react'
-import { ProductProps, Filters } from './types'
+import Footer from './components/Footer'
+import { useFilters } from './hooks/useFilters'
+import { IS_DEVELOPMENT } from 'config.ts'
 
 function App(): JSX.Element {
 
-  const [ products ] = useState(initialProducts)
-  const [filters, setFilters] = useState<Filters>({
-    category: 'all',
-    minPrice: 0
-  })
+  const {filters, setFilters, filterProducts} = useFilters()
 
-  const filterProducts = (products: ProductProps[]) => {
-    return products.filter(product => {
-      return (
-        product.price >= filters.minPrice && (
-          filters.category === 'all' ||
-          product.category === filters.category
-        )
-      )
-    })
-  }
+  const [ products ] = useState(initialProducts)
 
   const filteredProducts = filterProducts(products)
 
   return (
-    <div className="bg-black min-h-screen min-w-screen">
+    <div className="bg-black min-h-screen min-w-screen relative">
       <Header changeFilters={setFilters}/>
       <Products products={filteredProducts}/>
+      {IS_DEVELOPMENT && <Footer filters={filters}/>}
     </div>
   )
 }

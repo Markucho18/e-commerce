@@ -9,17 +9,17 @@ interface Props {
 const Product: React.FC<Props> = ({ productData }) => {
 
   const {
-    id,
+/*     id, */
     title,
     description,
     price,
-    discountPercentage,
+/*     discountPercentage,
     rating,
     stock,
     brand,
-    category,
+    category, */
     thumbnail,
-    images
+/*     images */
   } = productData
 
   return (

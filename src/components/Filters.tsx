@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useId, useEffect } from "react"
 import { Filters as FiltersType } from "../types"
 
 interface FiltersProps {
@@ -8,21 +8,31 @@ interface FiltersProps {
 const Filters: React.FC<FiltersProps> = ({ onChange }) => {
 
   const [minPrice, setMinPrice] = useState(0)
+  const minPriceFilterId = useId()
+  const categoryFilterId = useId()
 
   const handleMinPrice = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setMinPrice(event.target.value)
+    const value = parseInt(event.target.value)
+    setMinPrice(value)
     onChange(prevState => ({
       ...prevState,
-      minPrice: event.target.value
+      minPrice: value
     }))
   }
-
+  
   const handleCategory = (event: React.ChangeEvent<HTMLSelectElement>) => {
     onChange(prevState => ({
       ...prevState,
-      cateogory: event.target.value
+      category: event.target.value
     }))
   }
+
+  useEffect(()=>{
+    console.log({
+      minPriceFilterId,
+      categoryFilterId
+    })
+  },[])
 
   return (
     <section className="flex flex-col gap-2 p-4">
@@ -30,7 +40,7 @@ const Filters: React.FC<FiltersProps> = ({ onChange }) => {
         <label htmlFor="price">Price</label>
         <input
           type="range"
-          id="price"
+          id={minPriceFilterId}
           min={0}
           max={2000}
           value={minPrice}
@@ -41,7 +51,7 @@ const Filters: React.FC<FiltersProps> = ({ onChange }) => {
       <div className="flex items-center gap-4">
         <label htmlFor="category">Category</label>
         <select
-          id="category"
+          id={categoryFilterId}
           onChange={handleCategory}
         >
           <option value="all">All</option>
