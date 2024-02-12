@@ -1,3 +1,42 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.cartHover:hover ~ label{
+  background-color: #0369a1;
+}
+
+.cartHover:active ~ label{
+  transform: translateY(0.25rem);
+  transition: transform ease-in-out 50ms;
+}
+
+.openModal {
+  animation: openModal ease-in-out 50ms;
+  transform-origin: top center;
+  transform: scaleY(100%);
+}
+
+.closeModal {
+  animation: closeModal ease-in-out 50ms;
+  transform-origin: top center;
+  transform: scaleY(0%)
+}
+
+@keyframes openModal {
+  from {
+    transform: scaleY(0%);
+  }
+  to {
+    transform: scaleY(100%);
+  }
+}
+
+@keyframes closeModal {
+  from {
+    transform: scaleY(100%)
+  }
+  to {
+    transform: scaleY(0%)
+  }
+}

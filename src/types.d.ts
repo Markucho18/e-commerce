@@ -6,10 +6,11 @@ export interface ProductProps {
   discountPercentage: number
   rating: number 
   stock: number
-  brand: string //Cambiarlo despues hacer un tipo brand
-  category: string //Cambiarlo despues hacer un tipo category
+  brand: string 
+  category: string 
   thumbnail: string
   images: string[]
+  quantity?: number
 }
 
 export interface Filters {

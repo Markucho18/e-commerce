@@ -1,3 +1,4 @@
+import { useCartContext } from "../contexts/CartContext";
 import { ProductProps } from "../types";
 import { AddToCartIcon } from "./Icons"
 
@@ -7,6 +8,8 @@ interface Props {
 }
 
 const Product: React.FC<Props> = ({ productData }) => {
+
+  const { addToCart } = useCartContext()
 
   const {
 /*     id, */
@@ -27,9 +30,12 @@ const Product: React.FC<Props> = ({ productData }) => {
       <img src={thumbnail} alt="thumbnail" className="h-1/3 object-cover object-center rounded aspect-video"/>
       <p className="text-2xl w-full truncate text-center">{title}</p>
       <p className="text-lg">${price}</p>
-     { <p className="text-lg font-thin">{description}</p>}
-      <button>
-        <AddToCartIcon />
+     { <p className="grow text-lg font-thin">{description}</p>}
+      <button
+        className="flex justify-center w-full border-white border-2 rounded p-2 hover:bg-zinc-700 active:translate-y-1 transition-transform ease-in-out duration-100"
+        onClick={() => addToCart(productData)}
+      >
+        <AddToCartIcon size={30}/>
       </button>
     </li>
   )

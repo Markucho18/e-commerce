@@ -1,10 +1,11 @@
-import { Filters as FiltersType } from "../types"
+import { useFiltersContext } from "../contexts/FiltersContext"
 
 interface FooterProps {
-  filters: FiltersType
 }
 
-const Footer: React.FC<FooterProps> = ({ filters }) => {
+const Footer: React.FC<FooterProps> = () => {
+
+  const { filters } = useFiltersContext()
 
   const {minPrice, category} = filters
 

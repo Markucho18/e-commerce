@@ -1,27 +1,26 @@
-import { useState, useId, useEffect } from "react"
-import { Filters as FiltersType } from "../types"
+import { useId, useEffect } from "react"
+import { useFiltersContext } from "../contexts/FiltersContext"
 
 interface FiltersProps {
-  onChange: React.Dispatch<React.SetStateAction<FiltersType>>
 }
 
-const Filters: React.FC<FiltersProps> = ({ onChange }) => {
+const Filters: React.FC<FiltersProps> = () => {
 
-  const [minPrice, setMinPrice] = useState(0)
+  const { filters, setFilters } = useFiltersContext()
+
   const minPriceFilterId = useId()
   const categoryFilterId = useId()
 
   const handleMinPrice = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(event.target.value)
-    setMinPrice(value)
-    onChange(prevState => ({
+    setFilters(prevState => ({
       ...prevState,
       minPrice: value
     }))
   }
   
   const handleCategory = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    onChange(prevState => ({
+    setFilters(prevState => ({
       ...prevState,
       category: event.target.value
     }))
@@ -43,10 +42,10 @@ const Filters: React.FC<FiltersProps> = ({ onChange }) => {
           id={minPriceFilterId}
           min={0}
           max={2000}
-          value={minPrice}
+          value={filters.minPrice}
           onChange={handleMinPrice}
           />
-          <p>{minPrice}</p>
+          <p>{filters.minPrice}</p>
       </div>
       <div className="flex items-center gap-4">
         <label htmlFor="category">Category</label>
