@@ -1,6 +1,6 @@
 import { useCartContext } from "../contexts/CartContext";
 import { ProductProps } from "../types";
-import { AddToCartIcon } from "./Icons"
+import { AddToCartIcon, RemoveFromCartIcon } from "./Icons"
 
 
 interface Props {
@@ -9,7 +9,11 @@ interface Props {
 
 const Product: React.FC<Props> = ({ productData }) => {
 
-  const { addToCart } = useCartContext()
+  const { cart, addToCart, removeFromCart } = useCartContext()
+
+  const checkCartInProduct = (product: ProductProps) => {
+    return cart.some(item => item.id === product.id)
+  }
 
   const {
 /*     id, */
@@ -30,12 +34,13 @@ const Product: React.FC<Props> = ({ productData }) => {
       <img src={thumbnail} alt="thumbnail" className="h-1/3 object-cover object-center rounded aspect-video"/>
       <p className="text-2xl w-full truncate text-center">{title}</p>
       <p className="text-lg">${price}</p>
-     { <p className="grow text-lg font-thin">{description}</p>}
+      <p className="grow text-lg font-thin">{description}</p>
       <button
+        style={{backgroundColor: checkCartInProduct(productData) ? "#ef4444" : "#0ea5e9"}}
         className="flex justify-center w-full border-white border-2 rounded p-2 hover:bg-zinc-700 active:translate-y-1 transition-transform ease-in-out duration-100"
-        onClick={() => addToCart(productData)}
+        onClick={() => checkCartInProduct(productData) ? removeFromCart(productData) : addToCart(productData)}
       >
-        <AddToCartIcon size={30}/>
+        {checkCartInProduct(productData) ? <RemoveFromCartIcon size={30}/> : <AddToCartIcon size={30}/>}
       </button>
     </li>
   )

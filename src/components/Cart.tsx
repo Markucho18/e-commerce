@@ -1,5 +1,6 @@
 import { useId, useState } from "react"
-import { AddToCartIcon } from "./Icons"
+import CartItem from "./CartItem"
+import { AddToCartIcon, ClearCartIcon } from "./Icons"
 import { useCartContext } from "../contexts/CartContext"
 
 interface CartProps {
@@ -7,7 +8,7 @@ interface CartProps {
 
 const Cart: React.FC<CartProps> = ({}) => {
 
-  const { cart } = useCartContext()
+  const { cart, addToCart, removeFromCart, clearCart } = useCartContext()
   
   const [cartIsOpen, setCartIsOpen] = useState(false)
 
@@ -16,6 +17,7 @@ const Cart: React.FC<CartProps> = ({}) => {
   return (
     <div className="flex flex-col items-center fixed top-0 right-4 p-2 gap-2">
      <div className="flex relative self-end">
+      <span className="text-white text-lg mr-2">{cart.length}</span>
        <input
          className="absolute top-0 left-0 size-12 opacity-0 cursor-pointer cartHover z-10"
          id={cartCheckboxId}
@@ -29,20 +31,24 @@ const Cart: React.FC<CartProps> = ({}) => {
         <AddToCartIcon size={30}/>
       </label>
      </div>
-     <aside className={`flex flex-col max-w-[300px] bg-sky-800/75 rounded-lg text-lg overflow-hidden ${cart.length > 0 && cartIsOpen ? "openModal" : "closeModal"}`}>
+     <aside className={`flex flex-col w-[300px] bg-sky-800/75 rounded-lg text-lg overflow-hidden ${cart.length > 0 && cartIsOpen ? "openModal" : "closeModal"}`}>
       <ul className="divide-y-[2px] divide-black">
         {cart.map((product, i)=>(
-          <li className="flex items-center gap-4 text-white py-2 px-4 cursor-pointer select-none hover:bg-sky-800" key={i}>
-            <img
-              className="size-10 object-cover object-center rounded-full"
-              src={product.thumbnail}
-              alt="img"
-            />
-            <span className="grow truncate" >({product.quantity}) {product.title}</span>
-            <span className="opacity-50 text-xl">${product.price}</span>
-          </li>
+          <CartItem
+            key={i}
+            product={product}
+          />
         ))}
       </ul>
+     <footer className=" p-2 w-full">
+        <button
+          className="flex justify-center gap-2 w-full text-white bg-white/10 rounded-md py-2"
+          onClick={clearCart}
+        >
+          <ClearCartIcon size={30}/>
+          Clear Cart
+        </button>
+     </footer>
     </aside>
     </div>
   )
