@@ -16,6 +16,8 @@ function App(): JSX.Element {
 
   const filteredProducts = filterProducts(products)
 
+  console.log(JSON.stringify(filterProducts))
+
   return (
     <CartContextProvider>
       <div className="bg-black min-h-screen min-w-screen relative">

@@ -1,4 +1,5 @@
-import { useState, createContext, useContext } from "react";
+import { createContext, useContext } from "react";
+import { useCartReducer } from "../hooks/useCartReducer"
 import { ProductProps } from "../types";
 
 interface CartContext {
@@ -16,54 +17,11 @@ const FiltersContext = createContext<CartContext | null>(null)
 
 export function CartContextProvider ({ children }: CartProviderProps){
 
-  const [cart, setCart] = useState<ProductProps[]>([])
-
-
-  //AQUI TENEMOS UN PROBLEMA CON LA CANTIDAD
-  const addToCart = (product: ProductProps) => {
-    //Check if the product is already in the cart
-    const productInCartIndex = cart.findIndex(item => item.id === product.id)
-
-    if(productInCartIndex >= 0){
-      setCart(prevCart => {
-        const newCart = prevCart.map((product, i)=>{
-          if(i === productInCartIndex && product.quantity){
-            return {...product, quantity: product.quantity + 1}
-          }
-          return product
-        })
-        return newCart
-      })
-    }
-    else{
-      setCart(prevCart => [
-        ...prevCart, {...product, quantity: 1}
-      ])
-    }
-  }
-
-  const removeFromCart = (product: ProductProps) => {
-
-    if(product.quantity && product.quantity > 1){
-      const { quantity } = product
-      setCart(prevCart => {
-        const newCart = prevCart.map(prevProduct => {
-          if(prevProduct.id === product.id){
-            return {...prevProduct, quantity: quantity - 1}
-          }
-          return prevProduct
-        })
-        return newCart
-      })
-    }  else setCart(prevCart => prevCart.filter(item => item.id !== product.id))
-    
-  }
-
-  const clearCart = () => setCart([])
+  const { state, addToCart, removeFromCart, clearCart } = useCartReducer()
 
   return (
     <FiltersContext.Provider value={{
-      cart,
+      cart: state,
       addToCart,
       removeFromCart,
       clearCart
